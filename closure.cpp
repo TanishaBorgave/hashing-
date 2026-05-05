@@ -1,3 +1,9 @@
+#include <iostream>
+#include <vector>
+#include <string>
+#include <algorithm>
+using namespace std;
+
 bool contains(string s, char c)
 {
     return s.find(c) != string::npos;
@@ -19,7 +25,6 @@ string closure(string attrs, vector<pair<string, string>> fds)
 
             bool canApply = true;
 
-            // check if lhs ⊆ attrs
             for (char c : lhs)
             {
                 if (!contains(attrs, c))
@@ -29,7 +34,6 @@ string closure(string attrs, vector<pair<string, string>> fds)
                 }
             }
 
-            // add rhs if possible
             if (canApply)
             {
                 for (char c : rhs)
@@ -48,7 +52,6 @@ string closure(string attrs, vector<pair<string, string>> fds)
 
 string checkCandidateKey(string a, string b)
 {
-
     if (a.length() != b.length())
     {
         return " is not a candidate key.";
@@ -63,4 +66,22 @@ string checkCandidateKey(string a, string b)
     }
 
     return " is not a candidate key.";
+}
+
+int main()
+{
+    string attrs = "A";
+    string all = "ABCD";
+
+    vector<pair<string, string>> fds = {
+        {"A", "B"},
+        {"B", "C"},
+        {"C", "D"}};
+
+    string result = closure(attrs, fds);
+
+    cout << "Closure of " << attrs << " = " << result << endl;
+    cout << attrs << checkCandidateKey(result, all) << endl;
+
+    return 0;
 }
